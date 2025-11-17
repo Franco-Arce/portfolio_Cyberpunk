@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Cyberpunk - Franco Arce</title>
+    <!-- Script de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos CSS personalizados -->
+    <style>
+        :root {
+            --color-accent: #ff003c; /* Rojo neón brillante */
+            --color-bg: #0a0a0a;
+            --color-text: #e0e0e0;
+            --color-border: rgba(255, 0, 60, 0.3);
+            --color-card-bg: rgba(20, 20, 20, 0.85);
+        }
+
+        html {
+            /* Fuente Inter para todo */
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            /* Imagen de fondo sutil (opcional, pero añade textura) */
+            /* background-image: url('data:image/svg+xml,...'); */
+            background-attachment: fixed;
+            backdrop-filter: blur(2px);
+        }
+
+        /* Fuente Roboto Mono para elementos "tech" */
+        .font-mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        /* Efecto Glitch para Títulos */
+        .glitch {
+            position: relative;
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 700;
+            color: var(--color-accent);
+            animation: glitch-anim 2.5s infinite linear alternate-reverse;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--color-bg);
+            clip: rect(0, 900px, 0, 0);
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #00ffff; /* Cian */
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #ff00ff; /* Magenta */
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(42px, 9999px, 44px, 0); }
+            5% { clip: rect(12px, 9999px, 60px, 0); }
+            /* ... más steps ... */
+            100% { clip: rect(90px, 9999px, 98px, 0); }
+        }
+
+        @keyframes glitch-anim-1 {
+            0% { clip: rect(65px, 9999px, 119px, 0); }
+            /* ... */
+            100% { clip: rect(20px, 9999px, 130px, 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(129px, 9999px, 100px, 0); }
+            /* ... */
+            100% { clip: rect(110px, 9999px, 80px, 0); }
+        }
+
+
+        /* Estilo de Tarjeta Holográfica */
+        .card-holo {
+            position: relative;
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 24px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-holo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 60%);
+            opacity: 0.7;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        
+        .card-holo:hover {
+            border-color: var(--color-accent);
+            box-shadow: 0 0 25px rgba(255, 0, 60, 0.4);
+        }
+
+        .card-holo:hover::before {
+            opacity: 1;
+        }
+
+        /* Estilo de Botón Cyberpunk */
+        .btn-cyber {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 500;
+            color: var(--color-text);
+            background-color: transparent;
+            border: 2px solid var(--color-border);
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%);
+        }
+
+        .btn-cyber:hover {
+            background-color: var(--color-accent);
+            color: var(--color-bg);
+            border-color: var(--color-accent);
+            box-shadow: 0 0 15px var(--color-accent);
+        }
+        
+        .btn-cyber svg {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-cyber:hover svg {
+            transform: scale(1.1);
+        }
+
+        /* Tags de Herramientas */
+        .tool-tag {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.75rem; /* 12px */
+            display: inline-block;
+            padding: 2px 8px;
+            border: 1px solid var(--color-border);
+            color: var(--color-accent);
+            border-radius: 4px;
+            background-color: rgba(255, 0, 60, 0.05);
+        }
+
+        /* Scrollbar Estilizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-accent);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff4d79;
+        }
+
+        /* Animación de entrada (para JS) */
+        .js-scroll-animate {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, visibility 0.6s;
+        }
+        
+        .js-scroll-animate.is-visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-200 font-inter antialiased">
+
+    <!-- ===== HEADER ===== -->
+    <header class="container mx-auto max-w-5xl px-6 py-16">
+        <div class="text-center">
+            <h1 class="glitch text-5xl md:text-7xl font-bold uppercase" data-text="FRANCO ARCE">FRANCO ARCE</h1>
+            <h2 class="glitch text-2xl md:text-3xl font-bold mt-2" data-text="DATA ANALYST_">DATA ANALYST_</h2>
+        </div>
+
+        <!-- Contacto -->
+        <div class="flex flex-wrap justify-center gap-4 md:gap-8 mt-10 font-mono text-sm">
+            <a href="https://www.linkedin.com/in/franco-arce-37a83a220/" target="_blank" class="flex items-center gap-2 hover:text-accent transition-colors">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                LinkedIn
+            </a>
+            <a href="mailto:francogonzaloarce@gmail.com" class="flex items-center gap-2 hover:text-accent transition-colors">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4h-24v16h24v-16zm-12 10l-8-6h16l-8 6zm-10-8h20v.753l-10 7.247-10-7.247v-.753z"></path></svg>
+                francogonzaloarce@gmail.com
+            </a>
+            <span class="flex items-center gap-2">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 14h-12v-4h12v4z"></path></svg>
+                Córdoba, Argentina
+            </span>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="container mx-auto max-w-5xl px-6 py-12 space-y-16" id="main-content">
+
+        <!-- ===== SYSTEM_PROFILE ===== -->
+        <section>
+            <h2 class="glitch text-3xl mb-6 js-scroll-animate" data-text="SYSTEM_PROFILE">SYSTEM_PROFILE</h2>
+            <div class="card-holo js-scroll-animate">
+                <p class="text-lg leading-relaxed">
+                    Analista de Datos con experiencia en proyectos de alcance internacional, especializado en el diseño de soluciones analíticas de alto rendimiento para optimizar la toma de decisiones estratégicas.
+                </p>
+                <p class="mt-4 leading-relaxed">
+                    Experto en desarrollar y optimizar dashboards interactivos en Power BI, integrando datos de múltiples fuentes mediante procesos ETL implementados con Python y SQL. Capaz de transformar datos complejos en información clara, precisa y accionable, combinando habilidades técnicas con una visión orientada al negocio.
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== SKILLS & EDUCATION ===== -->
+        <section class="grid md:grid-cols-2 gap-8">
+            <div>
+                <h2 class="glitch text-3xl mb-6 js-scroll-animate" data-text="SKILL_MATRIX">SKILL_MATRIX</h2>
+                <div class="card-holo h-full js-scroll-animate">
+                    <h3 class="text-xl text-accent mb-4 font-mono">// Data Analyst</h3>
+                    <ul class="font-mono list-inside space-y-2 text-sm">
+                        <li>> Python (Pandas, Numpy)</li>
+                        <li>> SQL (MySQL, SQL Server)</li>
+                        <li>> Power BI (DAX, Modelado)</li>
+                        <li>> Excel (Avanzado, Power Query)</li>
+                        <li>> Visualización (Matplotlib, Seaborn)</li>
+                        <li>> ETL y Pipelines de Datos</li>
+                    </ul>
+                    
+                    <h3 class="text-xl text-accent mb-4 mt-8 font-mono">// Developer</h3>
+                    <ul class="font-mono list-inside space-y-2 text-sm">
+                        <li>> .NET</li>
+                        <li>> HTML, CSS, JavaScript</li>
+                        <li>> React</li>
+                    </ul>
+
+                    <h3 class="text-xl text-accent mb-4 mt-8 font-mono">// IT & Management</h3>
+                    <ul class="font-mono list-inside space-y-2 text-sm">
+                        <li>> Scrum</li>
+                        <li>> Jira</li>
+                        <li>> Gestión de Incidentes</li>
+                        <li>> Soporte al Cliente</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div>
+                <h2 class="glitch text-3xl mb-6 js-scroll-animate" data-text="EDUCATION">EDUCATION</h2>
+                <div class="card-holo h-full js-scroll-animate">
+                    <h3 class="text-xl text-accent mb-2">Instituto Superior Politécnico Córdoba</h3>
+                    <p class="font-mono text-gray-400 text-sm">Proyección 2026</p>
+                    
+                    <ul class="mt-4 space-y-4">
+                        <li>
+                            <h4 class="font-bold text-white">Científico de Datos e IA</h4>
+                            <p class="font-mono text-sm text-gray-300">[ En curso ]</p>
+                        </li>
+                        <li>
+                            <h4 class="font-bold text-white">Software Developer</h4>
+                            <p class="font-mono text-sm text-gray-300">[ En curso ]</p>
+                        </li>
+                    </ul>
+
+                    <h3 class="text-xl text-accent mb-2 mt-8">Idiomas</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li>
+                            <h4 class="font-bold text-white">Inglés</h4>
+                            <p class="font-mono text-sm text-gray-300">Nivel B2 (Upper-Intermediate)</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== WORK & CERTIFICATIONS ===== -->
+        <section class="grid md:grid-cols-2 gap-8">
+            <div>
+                <h2 class="glitch text-3xl mb-6 js-scroll-animate" data-text="WORK_EXPERIENCE">WORK_EXPERIENCE</h2>
+                <div class="card-holo h-full js-scroll-animate">
+                    <!-- Grupo Nods -->
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold text-white">Data Analyst</h3>
+                        <p class="text-accent font-mono">Grupo Nods</p>
+                        <p class="font-mono text-gray-400 text-sm">Agosto 2025 - Actualidad</p>
+                        <ul class="list-disc list-outside ml-5 mt-3 space-y-2 text-sm text-gray-300">
+                            <li>Desarrollo y optimización de dashboards en Power BI para clientes internacionales.</li>
+                            <li>Gestión de pipelines de datos (ETL) y administración de CRM.</li>
+                            <li>Automatización de procesos para reducción de carga operativa.</li>
+                            <li>Consultoría con clientes para definir KPIs y métricas clave.</li>
+                        </ul>
+                    </div>
+                    <!-- CYC Computación -->
+                    <div>
+                        <h3 class="text-xl font-bold text-white">IT Help Desk</h3>
+                        <p class="text-accent font-mono">CYC Computación (PPP)</p>
+                        <p class="font-mono text-gray-400 text-sm">Febrero 2025 - Agosto 2025</p>
+                        <ul class="list-disc list-outside ml-5 mt-3 space-y-2 text-sm text-gray-300">
+                            <li>Asistencia técnica, resolución de incidentes y gestión de configuraciones.</li>
+                            <li>Gestión y recuperación de datos; análisis de operaciones.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="glitch text-3xl mb-6 js-scroll-animate" data-text="CERTIFICATIONS">CERTIFICATIONS</h2>
+                <!-- Certificaciones -->
+                <div class="card-holo h-full flex flex-col justify-between js-scroll-animate">
+                    <div>
+                        <ul class="font-mono space-y-3 text-sm">
+                            <li>> Google Data Analytics Professional Certificate (Coursera, 2024)</li>
+                            <li>> Big Data/Data Analytics (Codo a Codo 4.0, 2024)</li>
+                            <li>> Análisis de Datos con Python (ECA Capacitaciones, 2024)</li>
+                            <li>> Excel: Desde Básico Hasta Avanzado (ECA Capacitaciones, 2024)</li>
+                            <li>> Curso final de análisis computacional de datos (Google, 2024)</li>
+                            <li>> Fundamentos del desarrollo web: Full Stack (LinkedIn Learning, 2021)</li>
+                            <li>> Introducción al Desarrollo Frontend con React (UTN, 2023)</li>
+                            <li>> Big Data (Santander Open Academy, 2024)</li>
+                            <li>> Marketing y Ventas (Municipalidad de Córdoba, 2024)</li>
+                            <li>> Bases de la Ciencia de Datos (Código Facilito, 2024)</li>
+                            <li>> C# API Mastery (Udemy, 2023)</li>
+                            <li>> Inglés Nivel 6, A2.2 (CUI-UBA, 2023)</li>
+                            <li>> Inglés 3rd level grammar (NET IDIOMAS, 2024)</li>
+                        </ul>
+                    </div>
+                    <!-- Botón para ver todas las certificaciones -->
+                    <div class="mt-6">
+                        <a href="Certificados.pdf" target="_blank" class="btn-cyber text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 10.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
+                            Ver Certificaciones (PDF)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ===== PROJECTS ===== -->
+        <section>
+            <h2 class="glitch text-3xl mb-6 js-scroll-animate" data-text="PROJECTS">PROJECTS</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Proyecto 1: Datachef -->
+                <div class="project-card card-holo flex flex-col justify-between js-scroll-animate">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Análisis de Restaurante "Datachef"</h3>
+                        <p class="mt-2 text-sm text-gray-300">
+                            Dashboard en Power BI para analizar ingresos, ventas y rendimiento mensual de un restaurante.
+                        </p>
+                        <!-- Tags de Herramientas -->
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="tool-tag">Power BI</span>
+                            <span class="tool-tag">SQL</span>
+                            <span class="tool-tag">ETL</span>
+                        </div>
+                    </div>
+                    <!-- Links -->
+                    <div class="flex flex-wrap gap-4 mt-6">
+                        <a href="Datachef.pdf" target="_blank" class="btn-cyber text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 10.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
+                            Ver Proyecto
+                        </a>
+                        <a href="https://www.linkedin.com/in/franco-arce-37a83a220/" target="_blank" class="btn-cyber text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                            Ver en LinkedIn
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Proyecto 2: CMM LATAM -->
+                <div class="project-card card-holo flex flex-col justify-between js-scroll-animate">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Auditoría Operaciones CMM LATAM</h3>
+                        <p class="mt-2 text-sm text-gray-300">
+                            Análisis de operaciones en LATAM para identificar ineficiencias en la recuperación de inversión (especialmente en Brasil vs. Argentina).
+                        </p>
+                        <!-- Tags de Herramientas -->
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="tool-tag">Looker Studio</span>
+                            <span class="tool-tag">Google Sheets</span>
+                            <span class="tool-tag">SQL</span>
+                        </div>
+                    </div>
+                    <!-- Links -->
+                    <div class="flex flex-wrap gap-4 mt-6">
+                        <a href="c24015 - Grupo 184 - TP P2 -Analítica_auditoría_CMM-Paraguay-Jun_2024_looker.pdf" target="_blank" class="btn-cyber text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 10.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
+                            Ver Proyecto
+                        </a>
+                        <a href="https://www.linkedin.com/in/franco-arce-37a83a220/" target="_blank" class="btn-cyber text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                            Ver en LinkedIn
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Proyecto 3: Copa América 2024 -->
+                <div class="project-card card-holo flex flex-col justify-between js-scroll-animate">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Dashboard Copa América 2024</h3>
+                        <p class="mt-2 text-sm text-gray-300">
+                            Análisis estadístico de jugadores y selecciones durante la Copa América USA 2024, con KPIs de rendimiento.
+                        </p>
+                        <!-- Tags de Herramientas -->
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="tool-tag">Power BI</span>
+                            <span class="tool-tag">Web Scrapping</span>
+                        </div>
+                    </div>
+                    <!-- Links -->
+                    <div class="flex flex-wrap gap-4 mt-6">
+                        <a href="CopaAmerica_Dashboard.pdf" target="_blank" class="btn-cyber text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 10.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
+                            Ver Proyecto
+                        </a>
+                        <a href="https://www.linkedin.com/in/franco-arce-37a83a220/" target="_blank" class="btn-cyber text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                            Ver en LinkedIn
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Proyecto 4: Quentin Tarantino -->
+                <div class="project-card card-holo flex flex-col justify-between js-scroll-animate">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Análisis "Tarantino Universe"</h3>
+                        <p class="mt-2 text-sm text-gray-300">
+                            Análisis de lenguaje explícito, muertes y palabras por minuto en la filmografía de Quentin Tarantino.
+                        </p>
+                        <!-- Tags de Herramientas -->
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="tool-tag">Power BI</span>
+                            <span class="tool-tag">Python</span>
+                            <span class="tool-tag">Web Scrapping</span>
+                        </div>
+                    </div>
+                    <!-- Links -->
+                    <div class="flex flex-wrap gap-4 mt-6">
+                        <a href="Tarantino Dashboard.pdf" target="_blank" class="btn-cyber text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 10.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
+                            Ver Proyecto
+                        </a>
+                        <a href="https://www.linkedin.com/in/franco-arce-37a83a220/" target="_blank" class="btn-cyber text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                            Ver en LinkedIn
+                        </a>
+                    </div>
+                </div>
+
+                 <!-- Proyecto 5: ABP-ISPC -->
+                 <div class="project-card card-holo flex flex-col justify-between js-scroll-animate">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Análisis de Ventas (ABP-ISPC)</h3>
+                        <p class="mt-2 text-sm text-gray-300">
+                            Proyecto de Análisis de Ventas para ISPC, enfocado en evolución de ingresos, KPIs y demografía de clientes.
+                        </p>
+                        <!-- Tags de Herramientas -->
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="tool-tag">Power BI</span>
+                        </div>
+                    </div>
+                    <!-- Links -->
+                    <div class="flex flex-wrap gap-4 mt-6">
+                        <a href="Proyectos.pdf" target="_blank" class="btn-cyber text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 10.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
+                            Ver Proyecto
+                        </a>
+                        <a href="https://www.linkedin.com/in/franco-arce-37a83a220/" target="_blank" class="btn-cyber text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                            Ver en LinkedIn
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Proyecto 6: CodeFlow Sell -->
+                <div class="project-card card-holo flex flex-col justify-between js-scroll-animate">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Sistema de Ventas "CodeFlow Sell"</h3>
+                        <p class="mt-2 text-sm text-gray-300">
+                            Aplicación de escritorio para gestión de ventas, clientes y stock.
+                        </p>
+                        <!-- Tags de Herramientas -->
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="tool-tag">.NET</span>
+                            <span class="tool-tag">SQL Server</span>
+                            <span class="tool-tag">C#</span>
+                        </div>
+                    </div>
+                    <!-- Links -->
+                    <div class="flex flex-wrap gap-4 mt-6">
+                        <a href="codeflow.pdf" target="_blank" class="btn-cyber text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 10.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
+                            Ver Proyecto
+                        </a>
+                        <a href="https://www.linkedin.com/in/franco-arce-37a83a220/" target="_blank" class="btn-cyber text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                            Ver en LinkedIn
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="text-center py-10 mt-16">
+        <p class="text-sm font-mono text-gray-500">
+            // DISEÑO DE PORTAFOLIO V_2.0.49 // FRANCO ARCE // DATA ANALYST //
+        </p>
+    </footer>
+
+    <!-- ===== SCRIPT PARA ANIMACIONES ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Selecciona todos los elementos que quieres animar
+            const targets = document.querySelectorAll('.js-scroll-animate');
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Añade la clase para disparar la animación
+                        entry.target.classList.add('is-visible');
+                        // Deja de observar el elemento una vez animado
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1 // Inicia la animación cuando el 10% del elemento es visible
+            });
+
+            // Observa cada elemento
+            targets.forEach(target => {
+                observer.observe(target);
+            });
+        });
+    </script>
+
+</body>
+</html>
